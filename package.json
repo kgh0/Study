@@ -1,11 +1,12 @@
 {
-  "name": "demo",
+  "name": "study",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kgh0.github.io/eoldemo1",
+  "homepage": "https://kgh0.github.io/Study",
   "dependencies": {
     "antd": "^3.25.0",
     "babel-plugin-import": "^1.12.2",
+    "babel-polyfill": "^6.26.0",
     "cross-fetch": "^3.0.4",
     "customize-cra": "^0.8.0",
     "events": "^3.0.0",

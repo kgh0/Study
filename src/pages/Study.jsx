@@ -19,7 +19,13 @@ import qtpt from '../images/qtpt.png';
 class Study extends React.Component {
 
 
-  selstate = '北京';
+  constructor(props) {
+    super(props)
+    this.state = {
+      selstate: '北京',
+      seljieduan: ""
+    }
+  }
 
   renderTable() {
     const dataSource = [
@@ -51,7 +57,15 @@ class Study extends React.Component {
       }
     ];
     return (
-      <Table pagination={false} bordered={true} dataSource={dataSource} columns={columns} size="small" />
+      <Table 
+      onRow={record => {
+        return {
+          onClick: event => {
+            debugger
+          }, // 点击行
+        };
+      }}
+      pagination={false} bordered={true} dataSource={dataSource} columns={columns} size="small" />
     );
   }
 
@@ -101,7 +115,7 @@ class Study extends React.Component {
         <div className="div21">
           <span className='span1'>{item.area}</span> <span className='span2'></span>
         </div>
-        <Row> {item.states.map(s => <Col key={s} xs={4} sm={3} md={3} lg={1} xl={1}> <span className='span3'>{s}</span></Col>)}
+        <Row> {item.states.map(s => <Col key={s} xs={4} sm={3} md={3} lg={1} xl={1}> <span className={`${s === this.state.selstate ? 'spanactive' : 'span3'}`} onClick={e => this.setState({ selstate: s })} >{s}</span></Col>)}
         </Row>
       </div>)
     })
@@ -110,9 +124,9 @@ class Study extends React.Component {
       <div>
         {listitems}
         <div className='div3'>
-          <div className='div31'> <img src={position} alt="position" /><span>{this.selstate}</span></div>
+          <div className='div31'> <img src={position} alt="position" /><span>{this.state.selstate}</span></div>
           <div className='div32'>
-            <h3>{this.selstate + '   中小学数字教材服务平台免费开放'}</h3>
+            <h3>{this.state.selstate + '   中小学数字教材服务平台免费开放'}</h3>
             <p>
               疫情袭来，根据河南省教育厅的统一部署，为保障全省中小学生 “停课不停学，学习不延期”，河南省中小学教材服务平台为全省中小学生免费开放，共推出2020年春季使用的正版数字教材154册，以及数万条配套资源，基本实现了学科全覆盖，学段全覆盖，版本覆盖率达到95%以上，除了提供 “数字教材”，河南全省中小学数字教材服务平台还为师生们提供了传统文化视频、图书资源和一师一优课堂教学案例视频资源。
             </p>
@@ -127,7 +141,15 @@ class Study extends React.Component {
 
   }
 
-  renderPt() {
+
+  jieduanClick = (f) => {
+    debugger;
+    this.setState({
+      seljieduan: f
+    })
+  }
+
+  renderPt(flag) {
     const youxiu = [
       {
         id: 1,
@@ -146,24 +168,32 @@ class Study extends React.Component {
         id: 3,
         logo: xrs,
         mfcolor: 'red',
-        fl: ['高中阶段', '大学阶段','研究生预科阶段']
+        fl: ['高中阶段', '大学阶段', '研究生预科阶段']
       }
     ]
+    const qt = ['小学阶段', '初中阶段', '高中阶段', '大学阶段']
 
-    const items = youxiu.map(item => (
+    let items = youxiu.map(item => (
       <div>
         <div className="div40">
           <img src={item.logo} alt="新东方" style={{ height: '1.6rem' }} />&nbsp;&nbsp; <span style={{ color: item.mfcolor }}>免费提供</span>
         </div>
         <Row >
           {item.fl.map(f =>
-            <Col xs={8} sm={6} md={4} lg={3} xl={3}  >
-              <div className="div41">{f}</div>
+            <Col key={item.id + f} xs={8} sm={6} md={4} lg={3} xl={3}  >
+              <div onClick={(e) => this.jieduanClick(item.id + f)} className={`div41 ${item.id + f === this.state.seljieduan ? "divactive" : ''}`}>{f}</div>
             </Col>)
-            }
+          }
         </Row>
       </div>));
-      return items;
+
+    if (flag === 1) {
+      items =  <Row >{qt.map(f =>
+        <Col key={f} xs={8} sm={6} md={4} lg={3} xl={3}  >
+          <div onClick={(e) => this.jieduanClick( f)} className={`div41 ${ f === this.state.seljieduan ? "divactive" : ''}`}>{f}</div>
+        </Col>)} </Row >
+    }
+    return items;
   }
 
 
@@ -217,13 +247,16 @@ class Study extends React.Component {
           <div>
             <img className="imgzy" src={qtpt} alt="其他平台资源" />
             <div>
-              <Row >
+              {
+                this.renderPt(1)
+              }
+              {/* <Row >
                 <Col xs={8} sm={6} md={4} lg={3} xl={3}  ><div className="div41">小学阶段</div></Col>
 
                 <Col xs={8} sm={6} md={4} lg={3} xl={3} ><div className="div41">中学阶段</div></Col>
 
                 <Col xs={8} sm={6} md={4} lg={3} xl={3} ><div className="div41">高中阶段</div></Col>
-              </Row>
+              </Row> */}
             </div>
           </div>
         </div>

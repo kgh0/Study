@@ -1,5 +1,7 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './pages/index.less';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
