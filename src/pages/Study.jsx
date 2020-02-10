@@ -1,5 +1,5 @@
-import React, { lazy } from 'react';
-import { Button, Icon, Row, Col, Table } from 'antd';
+import React from 'react';
+import { Row, Col, Table } from 'antd';
 import { connect } from 'react-redux';
 import position from '../images/position.svg';
 import eol from '../images/eol.png';
