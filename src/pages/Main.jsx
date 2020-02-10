@@ -8,7 +8,7 @@ const Study = lazy(() => import('./Study'));
 
 const MainContent = () => {
     return (
-        <div style={{ padding: '2px' }}>
+        <div>
             <Switch>
                 <Route exact path="/Study" component={Study} />
                 <Redirect to="/Study" />

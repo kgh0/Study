@@ -54,18 +54,20 @@ class Study extends React.Component {
         ellipsis: true,
         dataIndex: 'link',
         key: 'link',
+        render: text => <a href={text} target="_blank">{text}</a>
       }
     ];
     return (
-      <Table 
-      onRow={record => {
-        return {
-          onClick: event => {
-            debugger
-          }, // 点击行
-        };
-      }}
-      pagination={false} bordered={true} dataSource={dataSource} columns={columns} size="small" />
+      <Table
+        onRow={record => {
+          console.log(record);
+          return {
+            onClick: (event) => {
+              debugger
+            }, // 点击行
+          };
+        }}
+        pagination={false} bordered={true} dataSource={dataSource} columns={columns} size="small" />
     );
   }
 
@@ -130,7 +132,10 @@ class Study extends React.Component {
             <p>
               疫情袭来，根据河南省教育厅的统一部署，为保障全省中小学生 “停课不停学，学习不延期”，河南省中小学教材服务平台为全省中小学生免费开放，共推出2020年春季使用的正版数字教材154册，以及数万条配套资源，基本实现了学科全覆盖，学段全覆盖，版本覆盖率达到95%以上，除了提供 “数字教材”，河南全省中小学数字教材服务平台还为师生们提供了传统文化视频、图书资源和一师一优课堂教学案例视频资源。
             </p>
-            <div><span>链接:http://www.hnszjc.com</span></div>
+            <div>
+              <span>链接:</span>
+              <a href="http://www.hnszjc.com" target="_blank">http://www.hnszjc.com</a>
+            </div>
           </div>
         </div>
 
@@ -147,6 +152,8 @@ class Study extends React.Component {
     this.setState({
       seljieduan: f
     })
+    // window.location.href="https://www.eol.cn/"
+    window.open("https://www.eol.cn/", "_blank");
   }
 
   renderPt(flag) {
@@ -154,29 +161,29 @@ class Study extends React.Component {
       {
         id: 1,
         logo: xdf,
-        mfcolor: 'green',
+        mfcolor: '#00695C',
         fl: ['小学阶段', '初中阶段', '高中阶段', '大学阶段']
       },
       {
         id: 2,
         logo: hwl,
-        mfcolor: 'blue',
+        mfcolor: '#0089D3',
         fl: ['小学阶段', '初中阶段', '高中阶段', '大学阶段']
       }
       ,
       {
         id: 3,
         logo: xrs,
-        mfcolor: 'red',
+        mfcolor: '#FF0000',
         fl: ['高中阶段', '大学阶段', '研究生预科阶段']
       }
     ]
     const qt = ['小学阶段', '初中阶段', '高中阶段', '大学阶段']
 
     let items = youxiu.map(item => (
-      <div>
+      <div key={item.id}>
         <div className="div40">
-          <img src={item.logo} alt="新东方" style={{ height: '1.6rem' }} />&nbsp;&nbsp; <span style={{ color: item.mfcolor }}>免费提供</span>
+          <img src={item.logo} />&nbsp;&nbsp; <span style={{ color: item.mfcolor }}>免费提供</span>
         </div>
         <Row >
           {item.fl.map(f =>
@@ -188,9 +195,9 @@ class Study extends React.Component {
       </div>));
 
     if (flag === 1) {
-      items =  <Row >{qt.map(f =>
+      items = <Row >{qt.map(f =>
         <Col key={f} xs={8} sm={6} md={4} lg={3} xl={3}  >
-          <div onClick={(e) => this.jieduanClick( f)} className={`div41 ${ f === this.state.seljieduan ? "divactive" : ''}`}>{f}</div>
+          <div onClick={(e) => this.jieduanClick(f)} className={`div41 ${f === this.state.seljieduan ? "divactive" : ''}`}>{f}</div>
         </Col>)} </Row >
     }
     return items;
@@ -207,13 +214,12 @@ class Study extends React.Component {
           <div className="div01">
             <img src={xuexi} alt="学习不能停" />
           </div>
-
           <p className="p1">
             为贯彻落实教育部 “停课不停学” 的工作要求，在全国上下齐心协力防控冠状病毒期间，为方便寒假中的师生预习新学期课程并结合自身情况复习巩固、学习提升，中国教育在线发挥 “互联网+教育” 的作用，推出 “在线大讲堂” ，整合多地优质在线课程资源，服务广大师生。
                      </p>
           <div>
             <img className="imgzy" src={guojia} alt="国家资源" />
-            <div> {this.renderTable()}</div>
+            <div style={{marginBottom:"1rem"}}> {this.renderTable()}</div>
           </div>
           <img className='imgzy' src={gesheng} alt="各省资源" />
         </div>
@@ -227,18 +233,6 @@ class Study extends React.Component {
           <div>
             <img className="imgzy" src={youxiupt} alt="优秀平台资源" />
             <div >
-              {/* <div className="div40">
-                <img src={xdf} alt="新东方" style={{ height: '2rem' }} /> <span>免费提供</span>
-              </div>
-              <Row >
-                <Col xs={8} sm={6} md={4} lg={3} xl={3}  ><div className="div41">中学阶段</div></Col>
-
-                <Col xs={8} sm={6} md={4} lg={3} xl={3} ><div className="div41">中学阶段</div></Col>
-
-                <Col xs={8} sm={6} md={4} lg={3} xl={3} ><div className="div41">中学阶段</div></Col>
-
-                <Col xs={8} sm={6} md={4} lg={3} xl={3} ><div className="div41" >中学阶段ddddeee</div></Col>
-              </Row> */}
               {
                 this.renderPt()
               }
@@ -250,13 +244,6 @@ class Study extends React.Component {
               {
                 this.renderPt(1)
               }
-              {/* <Row >
-                <Col xs={8} sm={6} md={4} lg={3} xl={3}  ><div className="div41">小学阶段</div></Col>
-
-                <Col xs={8} sm={6} md={4} lg={3} xl={3} ><div className="div41">中学阶段</div></Col>
-
-                <Col xs={8} sm={6} md={4} lg={3} xl={3} ><div className="div41">高中阶段</div></Col>
-              </Row> */}
             </div>
           </div>
         </div>
